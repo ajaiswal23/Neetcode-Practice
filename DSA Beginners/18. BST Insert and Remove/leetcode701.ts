@@ -2,10 +2,7 @@
 
 // Notice that there may exist multiple valid ways for the insertion, as long as the tree remains a BST after insertion. You can return any of them.
 
- 
-
 // Example 1:
-
 
 // Input: root = [4,2,7,1,3], val = 5
 // Output: [4,2,7,1,3,5]
@@ -19,7 +16,6 @@
 
 // Input: root = [4,2,7,1,3,null,null,null,null,null,null], val = 5
 // Output: [4,2,7,1,3,5]
- 
 
 // Constraints:
 
@@ -29,8 +25,60 @@
 // -108 <= val <= 108
 // It's guaranteed that val does not exist in the original BST.
 
-function insertIntoBST(root: TreeNode | null, val: number): TreeNode | null {
-    
-};
+class TreeNode {
+  val: number;
+  left: TreeNode | null;
+  right: TreeNode | null;
+  constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+    this.val = val === undefined ? 0 : val;
+    this.left = left === undefined ? null : left;
+    this.right = right === undefined ? null : right;
+  }
+}
 
-// test case
+
+
+//
+// solved on leetcode
+//
+
+
+// function insertIntoBST(root: TreeNode | null, val: number): TreeNode | null {
+//   if (!root) {
+//     return new TreeNode(val);
+//   }
+//   if (root.val < val) root.right = insertIntoBST(root.right, val);
+//   else if (root.val > val) root.left = insertIntoBST(root.left, val);
+
+//   return root;
+// }
+
+
+export {}
+function insertIntoBST(root: TreeNode | null, val: number): TreeNode | null {
+  if (!root) return new TreeNode(val);
+
+  let current = root;
+  let isInserted = false
+
+  while (current) {
+    if (isInserted) break
+    
+    if (current.val < val) {
+      if (current.right) current = current.right;
+      else {
+        current.right = new TreeNode(val);
+        isInserted = true
+        break;
+      }
+    } else {
+      if (current.left) current = current.left;
+      else {
+        current.left = new TreeNode(val);
+        isInserted = true
+        break;
+      }
+    }
+  }
+  return root;
+}
