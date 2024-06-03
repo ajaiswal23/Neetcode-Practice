@@ -17,25 +17,22 @@
 function characterReplacement(s, k) {
     let left = 0;
     let longestString = 0;
-    let replaced = 0;
+    let map = new Map();
+    // for (let right = 0; right < s.length; right++)
+    //   map.set(s[right], (map.get(s[right]) || 0) + 1);
     for (let right = 0; right < s.length; right++) {
-        let currentChar = s[left];
-        let charReplace = false;
-        if (currentChar !== s[right] && replaced < k) {
-            replaced += 1;
-            charReplace = true;
+        map.set(s[right], (map.get(s[right]) || 0) + 1);
+        // let count = map.get(s[left]);
+        let count = Math.max(...Array.from(map.values()));
+        if (right - left + 1 - count > k) {
+            map.set(s[left], map.get(s[left]) - 1);
+            left++;
         }
-        longestString = Math.max(longestString, right - left + 1);
-        if (replaced === k) {
-            while (s[left] === s[right] || replaced) {
-                if (s[left] !== s[right])
-                    replaced -= 1;
-                left += 1;
-            }
-        }
-        if (charReplace)
-            continue;
+        else
+            longestString = Math.max(longestString, right - left + 1);
     }
     return longestString;
 }
 console.log(characterReplacement("ABAB", 2));
+// failed
+console.log(characterReplacement("BAAAB", 2));
